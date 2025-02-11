@@ -1,0 +1,12 @@
+services:
+  app:
+    image: localhost/local-dev/occupancy-pg-pipeline
+    env_file:
+      - .env
+    command: ["tail", "-f", "/dev/null"]
+    volumes:
+      - ./src/package.json:/app/package.json
+      - ./src/package-lock.json:/app/package-lock.json
+      - ./src/js:/app/js
+      - ./src/sql:/app/sql
+      - ./secrets:/secrets

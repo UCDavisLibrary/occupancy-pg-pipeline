@@ -1,0 +1,6 @@
+CREATE SCHEMA IF NOT EXISTS occupancy;
+
+CREATE TABLE IF NOT EXISTS occupancy.test (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL
+);

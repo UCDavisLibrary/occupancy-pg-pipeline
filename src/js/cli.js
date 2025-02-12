@@ -63,11 +63,23 @@ program.command('status')
 program.command('run')
   .description('Run the task immediately')
   .option('-w, --wait', 'Wait for the task to complete before giving a response')
+  .option('-s --start <start>', 'Custom start date for occupancy data query. If not provided, will default to last update in PG.')
+  .option('-e --end <end>', 'Custom end date for occupancy data query. If not provided, will default to current time.')
+  .option('-t --timeout <timeout>', 'Timeout in milliseconds for the task to complete. Default is 10 minutes.')
   .action(async (opts) => {
     try {
       const urlParams = new URLSearchParams();
       if ( opts.wait ) {
         urlParams.append('wait', true);
+      }
+      if ( opts.start ) {
+        urlParams.append('startDate', opts.start);
+      }
+      if ( opts.end ) {
+        urlParams.append('endDate', opts.end);
+      }
+      if ( opts.timeout ) {
+        urlParams.append('timeout', opts.timeout);
       }
       const response = await fetch(`http://localhost:${config.serverPort}/run?${urlParams.toString()}`, { method: 'POST' });
       if ( !response.ok ) {

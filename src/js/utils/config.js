@@ -2,6 +2,10 @@ import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
+/**
+ * @description Configuration class for the application.
+ * Reads environment variables and sets default values for configuration options.
+ */
 class Config {
 
   constructor(){
@@ -15,6 +19,8 @@ class Config {
 
     // port express server runs on in the container
     this.serverPort = this.getEnv('APP_SERVER_PORT', 3000);
+
+    this.taskTimeout = this.getEnv('APP_TASK_TIMEOUT', 1000 * 60 * 10);
 
     this.cron = {
       schedule: this.getEnv('APP_CRON_SCHEDULE', '0 4 * * *'),

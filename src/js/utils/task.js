@@ -83,6 +83,8 @@ class Task {
       logger.error(msg);
       throw new Error(msg);
     }, timeoutTime);
+
+
     try {
       if ( opts.manual ){
         if ( this.manualRunning ) return;
@@ -95,7 +97,7 @@ class Task {
       await taskWorker.run(opts);
 
     } catch (err) {
-      logger.error(err);
+      logger.error({data: {err}});
       return {error: err.message};
     } finally {
       if ( opts.manual ){

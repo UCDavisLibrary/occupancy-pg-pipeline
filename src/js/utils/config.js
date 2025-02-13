@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import fs from 'fs';
 
 /**
  * @description Configuration class for the application.
@@ -35,7 +36,11 @@ class Config {
       apiUrl: this.getEnv('APP_SENSOURCE_API_URL', 'https://vea.sensourceinc.com/api')
     }
 
-    this.gc = {}
+    this.gc = {
+      projectId: this.getEnv('APP_GC_PROJECT_ID', 'digital-ucdavis-edu'),
+      keyFilename: this.getEnv('APP_GC_KEY_FILENAME', '/secrets/gc-service-account-creds.json'),
+    }
+    this.gc.serviceAccountExists = fs.existsSync(this.gc.keyFilename);
 
     this.logger = {
       name: this.getEnv('APP_LOGGER_NAME', 'occupancy-pg-pipeline'),

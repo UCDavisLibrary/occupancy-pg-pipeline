@@ -21,7 +21,7 @@ class SensourceToken {
     const expiresAt = this.lastResponse.created_at + (expiresIn * 1000) - (this.refreshBuffer * 1000);
     const isExpired = Date.now() > expiresAt;
     if ( isExpired ){
-      logger.info('Sensource token expired', {createdAt: this.lastResponse.created_at, expiresAt});
+      logger.info('Sensource token expired', {data: {createdAt: this.lastResponse.created_at, expiresAt}});
     }
     return isExpired;
   }

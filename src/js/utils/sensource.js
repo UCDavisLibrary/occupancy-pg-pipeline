@@ -84,12 +84,12 @@ class Sensource {
       };
     }
 
-    logger.info(`Getting Sensource data`, {path, query, url});
+    logger.info(`Getting Sensource data`, {data: {path, query, url}});
     const response = await fetch(url, params);
     if ( !response.ok ){
       throw new Error(`Error getting Sensource data: ${response.status} ${response.statusText}`);
     }
-    logger.info(`Got Sensource data`, {path, query, url});
+    logger.info(`Got Sensource data`, {data: {path, query, url}});
     return response.json();
   }
 

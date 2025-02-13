@@ -23,7 +23,7 @@ class PGClient {
       port: config.pg.port
     });
     this.pool.on('error', (err) => {
-      logger.error('PG client error', err);
+      logger.error('PG client error', {data: {err}});
     });
 
     this.serviceAccountCredentials = {};
@@ -57,7 +57,7 @@ class PGClient {
       VALUES (${data.placeholdersString})
       RETURNING *
     `;
-    logger.info('Inserting location into PG', {sql, values: data.values});
+    logger.info('Inserting location into PG', {data: {sql, values: data.values}});
     const result = await this.pool.query(sql, data.values);
     logger.info('Inserted location into PG', {location: result.rows[0]});
     return result.rows[0];
@@ -76,7 +76,7 @@ class PGClient {
       SET ${data.sql}
       WHERE location_id=$${data.values.length+1}
     `
-    logger.info('Updating location in PG', {sql, values: [...data.values, id]});
+    logger.info('Updating location in PG', {data: {sql, values: [...data.values, id]}});
     await this.pool.query(sql, [...data.values, id]);
     logger.info('Updated location in PG');
   }
@@ -102,7 +102,7 @@ class PGClient {
       sql += ` WHERE hour <= $1`;
       values.push(endDate);
     }
-    logger.info('Getting occupancy data from PG', {sql, values});
+    logger.info('Getting occupancy data from PG', {data: {sql, values}});
     const result = await this.pool.query(sql, values);
     logger.info(`Got ${result.rows.length} occupancy records from PG`);
     return result.rows;
@@ -158,7 +158,7 @@ class PGClient {
     const secret = fs.readFileSync(config.pg.passwordFile, 'utf-8').trim();
 
     const url = `${config.pg.pgFarmUrl}/auth/service-account/login`;
-    logger.info('Getting PGFarm service account token', {url, username: config.pg.user});
+    logger.info('Getting PGFarm service account token', {data: {url, username: config.pg.user}});
     let resp = await fetch(url, {
       method: 'POST',
       headers: {

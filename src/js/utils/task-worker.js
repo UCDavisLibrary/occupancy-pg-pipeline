@@ -42,7 +42,7 @@ class TaskWorker {
 
     const currentData = await pgClient.getOccupancyData(dataQuery.startDate, dataQuery.endDate);
     const newOccupancy = occupancy.filter(o => !currentData.find(c => c.location_id === o.location_id && c.hour.getTime() === o.hour.getTime()));
-    logger.info('New occupancy data', {newOccupancyLength: newOccupancy.length});
+    logger.info(`New occupancy data: ${newOccupancy.length} rows`);
 
     if ( newOccupancy.length ){
       logger.info('Inserting new occupancy data');
@@ -86,7 +86,7 @@ class TaskWorker {
         if ( pgLocation.updated_at < new Date(location.src_updated_at) ){
           await pgClient.updateLocation(location);
         } else {
-          logger.info('Location is up to date', {location_id: location.location_id, name: location.name});
+          logger.info('Location is up to date', {data: {location_id: location.location_id, name: location.name}});
         }
       }
     }

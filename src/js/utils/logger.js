@@ -17,7 +17,7 @@ class Logger {
         defaultCallback: err => {
           if (err) console.error('logging-bunyan error:', err);}
       });
-      streams.push(loggingBunyan.stream('info'));
+      streams.push(loggingBunyan.stream(config.logger.level));
     }
     if ( config.logger.streams.includes('none') ){
       streams = [];
@@ -25,13 +25,13 @@ class Logger {
 
     this.bunyan = bunyan.createLogger({
       name: config.logger.name,
-      level: config.logger.level || 'info',
+      level: config.logger.level,
       streams: streams
     });
 
     let info = {
       name: config.logger.name,
-      level: config.logger.level || 'info',
+      level: config.logger.level,
       googleCloudLogging : {
         serviceAccountExists : config.gc.serviceAccountExists,
         enabled : config.logger.streams.includes('gc')

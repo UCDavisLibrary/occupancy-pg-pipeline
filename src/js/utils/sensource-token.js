@@ -15,6 +15,10 @@ class SensourceToken {
     this._promise = null;
   };
 
+  /**
+   * @description Check if the Sensource token is expired
+   * @returns {boolean} - True if the token is expired
+   */
   isExpired(){
     const expiresIn = this.lastResponse?.expires_in;
     if ( !expiresIn ) return true;
@@ -26,6 +30,10 @@ class SensourceToken {
     return isExpired;
   }
 
+  /**
+   * @description Get the Sensource token. Will fetch a new token if the current one is expired.
+   * @returns {Promise<string>} - The Sensource token
+   */
   async get(){
     if ( this.isExpired() ){
       if ( !this._promise ){

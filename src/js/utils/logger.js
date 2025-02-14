@@ -41,14 +41,26 @@ class Logger {
     this.info('logger initialized', {config: info});
   }
 
+  /**
+   * @description Log an info message
+   * @param  {...any} args
+   */
   info(...args){
     this._callLoggerMethod('info', args);
   }
 
+  /**
+   * @description Log an error message
+   * @param  {...any} args
+   */
   error(...args){
     this._callLoggerMethod('error', args);
   }
 
+  /**
+   * @description Log a warning message
+   * @param  {...any} args
+   */
   warn(...args){
     this._callLoggerMethod('warn', args);
   }

@@ -97,7 +97,10 @@ class Task {
       await taskWorker.run(opts);
 
     } catch (err) {
-      logger.error({data: {err}});
+      logger.error({data: {
+        message: err.message,
+        stack: err.stack
+      }});
       return {error: err.message};
     } finally {
       if ( opts.manual ){

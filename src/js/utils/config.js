@@ -45,8 +45,10 @@ class Config {
     this.logger = {
       name: this.getEnv('APP_LOGGER_NAME', 'occupancy-pg-pipeline'),
       streams: this.toArray( this.getEnv('APP_LOGGER_STREAM', 'console,gc') ),
-      level: this.getEnv('APP_LOGGER_LEVEL', 'info')
+      level: this.getEnv('APP_LOGGER_LEVEL', 'info'),
+      alertOnError: this.getEnv('APP_LOGGER_ALERT_ON_ERROR', false)
     }
+    this.logger.scriptLabel = this.getEnv('APP_LOGGER_SCRIPT_LABEL', this.logger.name);
 
     this.pg = {
       host: this.getEnv('APP_PG_HOST', 'pgfarm.library.ucdavis.edu'),

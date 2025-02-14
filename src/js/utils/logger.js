@@ -59,7 +59,8 @@ class Logger {
     let parsedArgs = [];
     if ( config.logger.streams.includes('gc') ){
       const labels = {
-        itisScript: 'occupancy-pg-pipeline'
+        itisScript: config.logger.scriptLabel,
+        itisScriptAlertOnError: `${config.logger.alertOnError}`
       }
       // merge in labels. gc extracts these from the bunyan payload and adds them to the gc log entry
       // if first arg is a string, bunyan will treat it as a message and stringify all subsequent args
